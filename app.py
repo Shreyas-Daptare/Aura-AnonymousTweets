@@ -5,10 +5,21 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from sqlalchemy import text, create_engine
 import os
+import uuid 
 # Initialize the Flask application
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'
 engine = create_engine("sqlite:///aura.db", echo=True) 
+UPLOAD_FOLDER = 'static/uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+# Allowed image extensions
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # Initialize LoginManager
 login_manager = LoginManager()
@@ -24,21 +35,33 @@ class User(UserMixin):
     def get_id(self):
         return str(self.id)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///aura.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///aura.db'
+#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize SQLAlchemy (but we won’t use models)
-db = SQLAlchemy(app)
+#db = SQLAlchemy(app)
     
-def query_proccesor(query):
-    result = db.session.execute(query)
-    return result
+
 
 # Home route
 @app.route('/')
 @login_required
 def index():
-    return render_template('index.html')
+    get_details_query = text("""
+        SELECT id, name, username, picture
+        FROM users
+        WHERE username=:username
+    """)
+    with engine.connect() as connection:
+        user = connection.execute(get_details_query, {'username': current_user.username}).fetchone()
+        print(f"User details: {user}")
+        user = list(user)
+        fixed_path = user[3].replace("static/", "")
+        #fixed_path = "/static/" + fixed_path
+        user[3] = fixed_path
+        print(f"Fixed path: {user[3]}")
+        #print(f"Current user: {current_user.username}, ID: {current_user.id}")
+    return render_template('index.html', user=user)
     #return f"Hello {current_user.username}, you are logged in!"
 
 
@@ -101,11 +124,19 @@ def handle_signup():
     name= request.form["name"]
     username=request.form["username"]
     password=request.form["password"]
-    picture = ""
-    #picture = request.files['picture']
+    #picture = ""
+    picture = request.files['image']
     #filename = secure_filename(picture.filename)
     #picture.save(os.path.join('static/uploads', filename))
 
+    if picture and allowed_file(picture.filename):
+        original_filename = secure_filename(picture.filename)
+        unique_filename = f"{uuid.uuid4().hex}_{original_filename}"
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+        picture.save(filepath)
+    else:
+        return render_template("InvalidImage.html"), 404
+    
     hashed_password = generate_password_hash(password)
     print(f"username: {username}, password:{password}, Hashed password: {hashed_password}")
     insert_query = text("""
@@ -118,7 +149,7 @@ def handle_signup():
             'name': name,
             'username': username,
             'password': hashed_password,
-            'picture': picture
+            'picture': filepath
         })
         connection.commit()
     return redirect(url_for("login"))

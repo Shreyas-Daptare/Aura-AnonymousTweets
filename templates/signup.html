@@ -90,7 +90,7 @@
           Create Account
         </h1>
         <p class="mb-6 text-center text-md">Create your account now!</p>
-        <form action="/signup" method="POST">
+        <form action="/signup" method="POST" enctype="multipart/form-data">
           <div class="mb-5 flex gap-3 rounded-full bg-[#333A5c] px-6 py-3">
             <svg
               viewBox="0 0 24 24"
@@ -161,6 +161,26 @@
               id="password"
               required
             />
+          </div>
+          <p class="mt-4 mb-7 text-center text-sm text-slate-400">
+            Please Provide a Profile Picture Below
+          </p>
+          <div class="mb-5 flex gap-3 rounded-full bg-[#333A5c] px-6 py-3">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4"
+            >
+              <path
+                d="M5 21C5 17.134 8.13401 14 12 14C15.866 14 19 17.134 19 21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
+                stroke="#64748b"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+            <input type="file" name="image" accept="image/*" required />
           </div>
           <button
             class="w-full rounded-full bg-gradient-to-r from-indigo-400 to-indigo-900 py-3 font-medium tracking-wide text-white cursor-pointer"

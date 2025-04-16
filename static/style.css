@@ -1270,36 +1270,19 @@ video {
 }
 
 .profile-card .card h2 {
-  margin: 0;
-  padding: 0 1rem;
+  margin-top: -10px;
+  margin-left: 170%;
+  padding: 0 0rem;
   color: white
 }
 
 .profile-card .card .title {
   padding: 1rem;
+  margin-left: 270%;
   text-align: right;
   color: #209cf4;
   font-weight: bold;
   font-size: 12px;
-}
-
-.profile-card .card .desc {
-  padding: 0.5rem 1rem;
-  font-size: 12px;
-  color: white;
-}
-
-.profile-card .card .actions {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  align-items: center;
-  padding: 0.5rem 1rem;
-}
-
-.profile-card .card svg {
-  width: 85px;
-  height: 85px;
-  margin: 0 auto;
 }
 
 .mycard-img-avatar {
@@ -1309,7 +1292,7 @@ video {
   border-radius: 50%;
   border: 6px solid rgb(32 35 39 / var(--tw-bg-opacity));
   top: 15px;
-  left: 85px;
+  left: 20px;
   overflow: hidden;
 }
 
@@ -1326,37 +1309,10 @@ video {
 }
 
 .profile-card .title-total {
-  padding: 2.5em 1.5em 1.5em 1.5em;
+  padding: 0em 1em 1em 1em;
 }
 
 .profile-card path {
   fill: #202327;
 }
 
-.profile-card .img-portada {
-  width: 100%;
-}
-
-.profile-card .portada {
-  width: 100%;
-  height: 100%;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
-  background-image: url("https://i.pinimg.com/736x/8b/7e/23/8b7e2348faf24b9a632b9a59c7d2ca63.jpg");
-  background-position: bottom center;
-  background-size: cover;
-}
-
-.profile-card button {
-  border: none;
-  background: none;
-  font-size: 24px;
-  color: #209cf4;
-  cursor: pointer;
-  transition: 0.5s;
-}
-
-.profile-card button:hover {
-  color: #209cf4;
-  transform: rotate(22deg);
-}

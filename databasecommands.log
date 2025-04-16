@@ -6,3 +6,16 @@ CREATE TABLE users (
     password TEXT NOT NULL,
     picture TEXT 
 );
+
+2] Create tweets table
+CREATE TABLE tweets (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tweet TEXT,
+    user_id INTEGER NOT NULL,
+    contains_image INTEGER DEFAULT 0, -- 0: no image, 1: image present
+    image_path TEXT,                  -- null if no image
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
