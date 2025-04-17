@@ -265,6 +265,15 @@ def handle_signup():
     #filename = secure_filename(picture.filename)
     #picture.save(os.path.join('static/uploads', filename))
 
+    search_query = text("""
+    SELECT password, id
+    FROM users
+    WHERE username=:username
+    """)
+    with engine.connect() as connection:
+        user = connection.execute(search_query, {'username': username}).fetchone()
+        if user is not None:
+            return render_template("UserAlreadyExists.html"), 404
     if picture and allowed_file(picture.filename):
         original_filename = secure_filename(picture.filename)
         unique_filename = f"{uuid.uuid4().hex}_{original_filename}"
