@@ -1,7 +1,9 @@
- ⚠️ **Warning: Linux-Only Compatibility**
+Create a folder `.streamlit` in Main. </br>
+create a file `secrets.toml` </br>
+in that file write
 
- This Flask application is designed to run on **Linux-based systems only**.
+```
+API_KEY = "ACTUALAPIKEY"
+```
 
- On **Windows**, file paths may be automatically altered — forward slashes (`/`) used in image URLs are converted to backslashes (`\`), which then appear as `%5C` in the browser. This can cause image loading issues or broken links.
-
- ✅ Please run this application on a **Linux environment** to ensure proper image path handling and overall compatibility.
+replace the ACTUALAPIKEY text with an API key generated at Azure
