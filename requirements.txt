@@ -2,3 +2,6 @@ flask
 flask_sqlalchemy
 flask_login
 pytz
+azure-ai-inference
+azure-core
+streamlit

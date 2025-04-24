@@ -90,7 +90,12 @@
           Create Account
         </h1>
         <p class="mb-6 text-center text-md">Create your account now!</p>
-        <form action="/signup" method="POST" enctype="multipart/form-data">
+        <form
+          action="/signup"
+          method="POST"
+          enctype="multipart/form-data"
+          onsubmit="return validatePassword()"
+        >
           <div class="mb-5 flex gap-3 rounded-full bg-[#333A5c] px-6 py-3">
             <svg
               viewBox="0 0 24 24"
@@ -115,6 +120,7 @@
               required
             />
           </div>
+
           <div class="mb-5 flex gap-3 rounded-full bg-[#333A5c] px-6 py-3">
             <svg
               viewBox="0 0 24 24"
@@ -138,6 +144,7 @@
               id="username"
             />
           </div>
+
           <div class="mb-5 flex gap-3 rounded-full bg-[#333A5c] px-6 py-3">
             <svg
               viewBox="0 0 24 24"
@@ -162,9 +169,17 @@
               required
             />
           </div>
+
+          <p
+            id="password-error"
+            class="text-red-400 text-sm text-center mb-4"
+            style="display: none"
+          ></p>
+
           <p class="mt-4 mb-7 text-center text-sm text-slate-400">
             Please Provide a Profile Picture Below
           </p>
+
           <div class="mb-5 flex gap-3 rounded-full bg-[#333A5c] px-6 py-3">
             <svg
               viewBox="0 0 24 24"
@@ -182,12 +197,43 @@
             </svg>
             <input type="file" name="image" accept="image/*" required />
           </div>
+
           <button
             class="w-full rounded-full bg-gradient-to-r from-indigo-400 to-indigo-900 py-3 font-medium tracking-wide text-white cursor-pointer"
           >
             Sign Up
           </button>
+
+          <script>
+            function validatePassword() {
+              const password = document.getElementById("password").value;
+              const error = document.getElementById("password-error");
+
+              const rules = [
+                { regex: /.{8,}/, message: "at least 8 characters" },
+                { regex: /[A-Z]/, message: "an uppercase letter" },
+                { regex: /\d/, message: "a number" },
+                { regex: /[^A-Za-z0-9]/, message: "a special character" },
+              ];
+
+              const failedRules = rules.filter(
+                (rule) => !rule.regex.test(password)
+              );
+              if (failedRules.length > 0) {
+                error.innerText =
+                  "Password must contain " +
+                  failedRules.map((r) => r.message).join(", ") +
+                  ".";
+                error.style.display = "block";
+                return false;
+              }
+
+              error.style.display = "none";
+              return true;
+            }
+          </script>
         </form>
+
         <p class="mt-4 mb-7 text-center text-sm text-slate-400">
           Already Have an account?
           <a href="/login" class="hover:underline text-blue-400">Login</a>

@@ -12,6 +12,7 @@ import pytz
 utc = pytz.utc
 ist = pytz.timezone("Asia/Kolkata")
 
+server_os = "posix"
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'
 engine = create_engine("sqlite:///aura.db", echo=True) 
@@ -62,6 +63,8 @@ def index():
         print(f"User details: {user}")
         user = list(user)
         fixed_path = user[3].replace("static/", "")
+        if server_os == "nt":
+            fixed_path = fixed_path.replace("\\", "/")
         #fixed_path = "/static/" + fixed_path
         user[3] = fixed_path
         print(f"Fixed path: {user[3]}")
@@ -84,8 +87,12 @@ def index():
 
             if len(lst) > 1 and isinstance(lst[1], str) and lst[1].startswith('static/'):
                 lst[1] = lst[1].replace('static/', '')
+                if server_os == "nt":
+                    lst[1] = lst[1].replace("\\", "/")
             if len(lst) > 6 and isinstance(lst[6], str) and lst[6].startswith('static/'):
                 lst[6] = lst[6].replace('static/', '')
+                if server_os == "nt":
+                    lst[6] = lst[6].replace("\\", "/")
 
             # Convert timestamp (index 7) to IST
             if len(lst) > 7 and isinstance(lst[7], str):
@@ -117,6 +124,8 @@ def index_tweeted():
         print(f"User details: {user}")
         user = list(user)
         fixed_path = user[3].replace("static/", "")
+        if server_os == "nt":
+            fixed_path = fixed_path.replace("\\", "/")
         #fixed_path = "/static/" + fixed_path
         user[3] = fixed_path
         print(f"Fixed path: {user[3]}")
@@ -178,8 +187,12 @@ def index_tweeted():
 
             if len(lst) > 1 and isinstance(lst[1], str) and lst[1].startswith('static/'):
                 lst[1] = lst[1].replace('static/', '')
+                if server_os == "nt":
+                    lst[1] = lst[1].replace("\\", "/")
             if len(lst) > 6 and isinstance(lst[6], str) and lst[6].startswith('static/'):
                 lst[6] = lst[6].replace('static/', '')
+                if server_os == "nt":
+                    lst[6] = lst[6].replace("\\", "/")
 
             # Convert timestamp (index 7) to IST
             if len(lst) > 7 and isinstance(lst[7], str):
@@ -302,8 +315,16 @@ def handle_signup():
 @app.route("/forgotpassword")
 def forgot_password():
     return render_template('ForgotPassword.html')
+
+
+@app.route("/auraai")
+@login_required
+def auraai():
+    return render_template("auraai.html")
     
 # Run the application
 if __name__ == '__main__':
+    if os.name == 'nt':
+        server_os = "nt"
     # Debug mode should be turned off in production
     app.run(debug=True)
