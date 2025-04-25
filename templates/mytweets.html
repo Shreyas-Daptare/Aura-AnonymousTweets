@@ -229,7 +229,9 @@
                 >
                   <span class="material-symbols-outlined text-3xl">more</span
                   ><span class="hidden sm:block">
-                    <button onclick="window.location.href = '/mytweets'">
+                    <button
+                      onclick="window.open('/mytweets', '_blank', 'noopener,noreferrer')"
+                    >
                       Your Thoughts
                     </button></span
                   >
@@ -284,7 +286,7 @@
               <div
                 class="left bg-slate-5002 w-[48%] text-center font-semibold text-lg"
               >
-                For You
+                Your Thoughts
               </div>
               <!--
               <div
@@ -299,107 +301,6 @@
             </div>
             <hr class="opacity-50" />
             <!--Feed Header Section Starts Here  -->
-
-            <!-- New Tweet Section Starts Here -->
-            <form action="/" method="POST" enctype="multipart/form-data">
-              <div class="flex gap-4 my-3">
-                <img
-                  class="h-12 w-12 m-3 rounded-full"
-                  src="{{ url_for('static', filename= user[3]) }}"
-                  alt=""
-                />
-
-                <div class="w-full">
-                  <input
-                    class="w-full h-7 my-2 text-xl bg-black outline-none text-white"
-                    type="text"
-                    name="tweet"
-                    id="tweet"
-                    placeholder="What is happening?"
-                  />
-                  <!--
-
-                  <div
-                    class="text-[#1d9bf0] flex items-center gap-1 w-full my-4"
-                  >
-                    <span class="material-symbols-outlined text-xl"
-                      >public</span
-                    >
-                    <span class="font-bold">Everyone can reply</span>
-                  </div>                  
-                  -->
-
-                  <div
-                    class="w-[90%] h-[0.2px] my-3 bg-slate-300 opacity-60"
-                  ></div>
-
-                  <div class="icons flex gap-2 justify-between items-center">
-                    <div class="flex gap-1 sm:gap-4">
-                      <label for="image-upload" class="cursor-pointer">
-                        <span
-                          class="material-symbols-outlined text-xl text-[#1d9bf0]"
-                        >
-                          image
-                        </span>
-                      </label>
-                      <input
-                        type="file"
-                        name="image"
-                        id="image-upload"
-                        accept="image/*"
-                        class="hidden"
-                      />
-
-                      <!--
-                      <span
-                        class="material-symbols-outlined text-xl text-[#1d9bf0] cursor-pointer"
-                        >gif</span
-                      >
-                      <span
-                        class="material-symbols-outlined text-xl text-[#1d9bf0] cursor-pointer"
-                        >ballot</span
-                      >
-                      <span
-                        class="material-symbols-outlined text-xl text-[#1d9bf0] cursor-pointer"
-                        >sentiment_satisfied</span
-                      >
-                      <span
-                        class="material-symbols-outlined text-xl text-[#1d9bf0] cursor-pointer"
-                        >calendar_month</span
-                      >
-                      <span
-                        class="material-symbols-outlined text-xl text-[#1d9bf0] cursor-pointer"
-                        >pin_drop</span
-                      >
-                    --></div>
-                    <button
-                      type="submit"
-                      name="action"
-                      value="Post"
-                      class="bg-[#1d9bf0] text-white rounded-full flex items-center justify-around px-2 sm:px-4 py-1 font-semibold sm:mx-12 sm:ml-3 w-fit h-fit mx-3"
-                    >
-                      <span class="xl:block hidden">Post</span>
-                      <span class="material-symbols-outlined block xl:hidden">
-                        edit
-                      </span>
-                    </button>
-                    <button
-                      type="submit"
-                      name="action"
-                      value="Anonymous"
-                      class="bg-[#1d9bf0] text-white rounded-full flex items-center justify-around px-2 sm:px-4 py-1 font-semibold sm:mx-12 sm:ml-3 w-fit h-fit mx-3"
-                    >
-                      <span class="xl:block hidden">Anonymous</span>
-                      <span class="material-symbols-outlined block xl:hidden">
-                        edit
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <hr class="opacity-60" />
-            </form>
-            <!-- New Tweet Section Ends Here -->
 
             <!-- Posts Section Starts Here -->
             <div class="posts">

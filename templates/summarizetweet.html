@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Summarizer</title>
+    <link rel="stylesheet" href="../static/summarizestyle.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <div class="quote-container">
+        <!-- First Card -->
+        <div id="quote-box">
+          <div class="quote-content">
+            <div class="quote-text">
+              <i class="fa fa-quote-left"></i>
+              <span id="text1"> {{ tweet[4] }} </span>
+            </div>
+            <div class="quote-author">
+              {% if tweet[3] is none %}
+              <span id="author1">- Anonymous</span>
+              {% else %}
+              <span id="author1">- {{ tweet[3] }}</span>
+              {% endif %}
+            </div>
+            <div class="buttons">
+              <a href="/" target="_blank" class="button">
+                <!-- <i class="fab fa-twitter"></i> -->
+              </a>
+              <button
+                id="new-quote1"
+                class="button"
+                onclick="window.location.href = '/'"
+              >
+                More Tweets
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Second Card (from html2) -->
+        <div class="mainbox">
+          <h2 id="text2">{{ summarized_tweet }}</h2>
+          <h4 id="author2">- Aura AI</h4>
+
+          <div class="buttons" id="buttons2">
+            <a href="/" target="_blank">
+              <!-- <i class="bi bi-twitter-x"></i> -->
+            </a>
+            <div
+              id="new-quote2"
+              title="Chat with AURA AI"
+              onclick="window.location.href='/auraai'"
+            >
+              <i class="bi bi-shuffle" style="opacity: 0.3"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

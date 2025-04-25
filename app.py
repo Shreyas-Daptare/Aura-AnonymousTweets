@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_sqlalchemy import SQLAlchemy
+from servermethods import summarizer
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
@@ -8,6 +9,7 @@ import os
 import uuid 
 from datetime import datetime
 import pytz
+import ast
 # Initialize the Flask application
 utc = pytz.utc
 ist = pytz.timezone("Asia/Kolkata")
@@ -321,7 +323,83 @@ def forgot_password():
 @login_required
 def auraai():
     return render_template("auraai.html")
+
+@app.route('/summarize', methods=['POST'])
+@login_required
+def summarize():
+    tweet = request.form['tweet']  
+    try:
+        tweet = ast.literal_eval(tweet)
+        print(type(tweet))
+        print(f"Tweet (as list): {tweet}")
+    except Exception as e:
+        print(f"Error converting string to list: {e}")
     
+    summarized_tweet = summarizer(tweet)
+    #summarized_tweet = "This is a placeholder for the summarized tweet."
+    return render_template('summarizetweet.html', tweet=tweet, summarized_tweet=summarized_tweet)
+    
+@app.route('/mytweets')
+@login_required
+def mytweets():
+    get_details_query = text("""
+        SELECT id, name, username, picture
+        FROM users
+        WHERE username=:username
+    """)
+    with engine.connect() as connection:
+        user = connection.execute(get_details_query, {'username': current_user.username}).fetchone()
+        print(f"User details: {user}")
+        user = list(user)
+        fixed_path = user[3].replace("static/", "")
+        if server_os == "nt":
+            fixed_path = fixed_path.replace("\\", "/")
+        #fixed_path = "/static/" + fixed_path
+        user[3] = fixed_path
+        print(f"Fixed path: {user[3]}")
+        #print(f"Current user: {current_user.username}, ID: {current_user.id}")
+        
+        
+    get_tweets_query = text("""
+    SELECT u.id, u.picture, u.username, u.name, t.tweet, t.contains_image, t.image_path, t.created_at
+    FROM tweets t
+    LEFT JOIN users u ON t.user_id = u.id
+    WHERE u.username =:username
+    ORDER BY created_at DESC
+    """)
+    
+    with engine.connect() as connection:
+        tweets = connection.execute(get_tweets_query, {'username': current_user.username}).fetchall()
+        #print(f"Tweets: {tweets}")
+        list_of_lists = []
+        for tup in tweets:
+            lst = list(tup)
+
+            if len(lst) > 1 and isinstance(lst[1], str) and lst[1].startswith('static/'):
+                lst[1] = lst[1].replace('static/', '')
+                if server_os == "nt":
+                    lst[1] = lst[1].replace("\\", "/")
+            if len(lst) > 6 and isinstance(lst[6], str) and lst[6].startswith('static/'):
+                lst[6] = lst[6].replace('static/', '')
+                if server_os == "nt":
+                    lst[6] = lst[6].replace("\\", "/")
+
+            # Convert timestamp (index 7) to IST
+            if len(lst) > 7 and isinstance(lst[7], str):
+                try:
+                    naive_dt = datetime.strptime(lst[7], "%Y-%m-%d %H:%M:%S")
+                    aware_utc = utc.localize(naive_dt)
+                    ist_time = aware_utc.astimezone(ist)
+                    lst[7] = ist_time.strftime("%Y-%m-%d %H:%M:%S")
+                except Exception as e:
+                    print("Error converting time:", e)
+
+            list_of_lists.append(lst)
+        print(f"List of lists: {list_of_lists}")
+        
+    
+        
+    return render_template('mytweets.html', user=user, tweets=list_of_lists)
 # Run the application
 if __name__ == '__main__':
     if os.name == 'nt':

@@ -1,0 +1,161 @@
+/* === General Reset === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* === Shared Body Styling === */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(45deg, #764ba2, #667eea);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* === Container for Both Cards === */
+.quote-container {
+    width: 100%;
+    max-width: 700px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* === First Card Styling === */
+#quote-box {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.quote-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.quote-text {
+    font-size: 1.75rem;
+    color: #2c3e50;
+    text-align: center;
+}
+
+.quote-text i {
+    font-size: 1.5rem;
+    margin-right: 10px;
+}
+
+.quote-author {
+    text-align: right;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #666;
+}
+
+/* === First Card Buttons === */
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    color: white;
+}
+
+#tweet-quote1 {
+    background-color: #1da1f2;
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+}
+
+#tweet-quote1:hover {
+    background-color: #1991db;
+}
+
+#new-quote1 {
+    background-color: #764ba2;
+}
+
+#new-quote1:hover {
+    background-color: #663e8f;
+}
+
+/* === Second Card Styling === */
+.mainbox {
+    background-color: black;
+    border-radius: 10px;
+    display: flex;
+    max-width: 100%;
+    min-height: 200px;
+    justify-content: flex-start;
+    align-items: flex-end;
+    flex-direction: column;
+    padding: 50px;
+}
+
+#text2 {
+    color: white;
+    font-style: italic;
+}
+
+#author2 {
+    color: white;
+    font-family: arial;
+    font-size: 20px;
+}
+
+/* === Second Card Buttons === */
+#buttons2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+}
+
+#new-quote2 {
+    background-color: white;
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+.bi-twitter-x {
+    padding: 5px;
+    border-radius: 5px;
+    color: black;
+    background-color: white;
+    font-size: 20px;
+}
+
+.bi-twitter-x:hover,
+#new-quote2:hover {
+    background-color: lightblue;
+    cursor: pointer;
+}
+
+/* Optional fade effect */
+.fade {
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
+}
+
+.fade.show {
+    opacity: 1;
+}

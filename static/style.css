@@ -891,7 +891,7 @@ video {
 
 .bg-\[\#1d9bf0\] {
   --tw-bg-opacity: 1;
-  background-color: rgb(29 155 240 / var(--tw-bg-opacity));
+  background-color: #2E3944;
 }
 
 .bg-\[\#202327\] {
@@ -901,7 +901,7 @@ video {
 
 .bg-black {
   --tw-bg-opacity: 1;
-  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+  background-color: #141619;
 }
 
 .bg-slate-300 {
@@ -999,7 +999,7 @@ video {
 
 .text-\[\#1d9bf0\] {
   --tw-text-opacity: 1;
-  color: rgb(29 155 240 / var(--tw-text-opacity));
+  color: #2E3944;
 }
 
 .text-black {
